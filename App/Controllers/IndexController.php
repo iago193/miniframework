@@ -5,12 +5,18 @@
     class indexController {
 
         public function index() {
-            echo 'chegamos ao indexController action index';
+            $dados = ['Sofá', 'Cadeira', 'Cama'];
+            $this->render('index', $dados);
         }
 
         public function sobreNos() {
-            echo 'chegamos ao indexController action sobreNos';
+            $dados = ['Notebook', 'Iphone', 'Tv'];
+            $this->render('sobreNos', $dados);
         } 
+
+        public function render($view, $dados) {
+            require_once "../App/Views/index/".$view.".phtml";
+        }
     }
 
 ?>
