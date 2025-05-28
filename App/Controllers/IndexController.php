@@ -2,21 +2,31 @@
 
     namespace App\Controllers;
 
-    class indexController {
+    class IndexController {
+
+        private $view;
+
+        public function __construct() {
+            $this->view = new \stdClass();
+        }
 
         public function index() {
-            $dados = ['Sofá', 'Cadeira', 'Cama'];
-            $this->render('index', $dados);
+            $this->view->dados = ['Sofá', 'Cadeira', 'Cama'];
+            $this->render('index');
         }
 
         public function sobreNos() {
-            $dados = ['Notebook', 'Iphone', 'Tv'];
-            $this->render('sobreNos', $dados);
-        } 
+            $this->view->dados = ['Notebook', 'Iphone', 'Tv'];
+            $this->render('sobreNos');
+        }
 
-        public function render($view, $dados) {
-            require_once "../App/Views/index/".$view.".phtml";
+        public function render($view) {
+            $classeAtual = get_class($this);
+            $classeAtual = str_replace('App\\Controllers\\', '', $classeAtual);
+            $classeAtual = strtolower(str_replace('Controller', '', $classeAtual));
+
+            require_once "../App/Views/{$classeAtual}/{$view}.phtml";
         }
     }
-
+    
 ?>
