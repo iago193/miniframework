@@ -4,7 +4,9 @@
     //echo 'chegamos ao indexController action index';
     //echo '<hr>'
 
-    foreach($this->view->dados as $indice => $valor) {
-        echo $valor;
+    foreach($this->view->dados as $indice => $produto) {
+        echo '<pre>';
+        print_r($produto);
+        echo '</pre>';
     }
 ?>
