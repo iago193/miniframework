@@ -1,38 +1,35 @@
 <?php
 
-    namespace App;
+namespace App;
 
-    use PDO;
-    use PDOException;
+use PDO;
+use PDOException;
 
-    class Connection {
+class Connection {
 
-        private $host = 'localhost';
-        private $dataBase = 'db_argo';
-        private $user = 'root';
-        private $senha = '';
+    private static $host = 'localhost';
+    private static $dataBase = 'twitter_clone';
+    private static $user = 'root';
+    private static $senha = '';
 
-        public function getDb() {
+    public static function getDb() {
+        try {
+            $conn = new PDO(
+                "mysql:host=" . self::$host . ";dbname=" . self::$dataBase . ";charset=utf8",
+                self::$user,
+                self::$senha
+            );
 
-            try {
-                $conexao = new PDO(
-                    "mysql:host={$this->host};dbname={$this->dataBase};charset=utf8",
-                    $this->user,
-                    $this->senha
-                );
+            // Ativar modo de erro do PDO
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-                // Ativar modo de erro do PDO
-                $conexao->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            return $conn;
 
-                return $conexao;
-
-            } catch (PDOException $e) {
-                // Tratar erro
-                echo 'Erro na conexão: ' . $e->getMessage();
-                return null;
-            }
+        } catch (PDOException $e) {
+            echo 'Erro na conexão: ' . $e->getMessage();
+            return null;
         }
     }
-
+}
 
 ?>
