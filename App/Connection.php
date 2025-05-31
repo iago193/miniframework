@@ -1,24 +1,38 @@
 <?php
 
-namespace App;
+    namespace App;
 
-class Connection {
+    use PDO;
+    use PDOException;
 
-	public static function getDb() {
-		try {
+    class Connection {
 
-			$conn = new \PDO(
-				"mysql:host=localhost;dbname=mvc;charset=utf8",
-				"root",
-				"" 
-			);
+        private $host = 'localhost';
+        private $dataBase = 'db_argo';
+        private $user = 'root';
+        private $senha = '';
 
-			return $conn;
+        public function getDb() {
 
-		} catch (\PDOException $e) {
-			//.. tratar de alguma forma ..//
-		}
-	}
-}
+            try {
+                $conexao = new PDO(
+                    "mysql:host={$this->host};dbname={$this->dataBase};charset=utf8",
+                    $this->user,
+                    $this->senha
+                );
+
+                // Ativar modo de erro do PDO
+                $conexao->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                return $conexao;
+
+            } catch (PDOException $e) {
+                // Tratar erro
+                echo 'Erro na conexão: ' . $e->getMessage();
+                return null;
+            }
+        }
+    }
+
 
 ?>
